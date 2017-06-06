@@ -1,0 +1,44 @@
+{
+    "name": "daltcore/laravel-deploy-helper",
+    "description": ":package_description",
+    "keywords": [
+        "laravel",
+        "daltcore",
+        "laravel-deploy-helper"
+    ],
+    "homepage": "https://github.com/daltcore/laravel-deploy-helper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": ":author_name",
+            "email": ":author_email",
+            "homepage": ":author_website",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.5.0",
+        "illuminate/support": "~5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "DALTCORE\\LaravelDeployHelper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DALTCORE\\LaravelDeployHelper\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
