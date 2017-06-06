@@ -53,9 +53,9 @@ class Deploy extends Command
             throw new \Exception('The argument "--branch=" is required!', 128);
         }
 
-        if(in_array($this->option('branch'), Git::getBranches()) == false {
-            throw new \Exception('The branch ' . $this->option('branch') 
-            . " does not exists locally? Please `git pull`!" , 128);
+        if(in_array($this->option('branch'), Git::getBranches()) == false) {
+            throw new \Exception('The branch "' . $this->option('branch')
+            . '" does not exists locally? Please `git pull`!' , 128);
         }
 
     }
