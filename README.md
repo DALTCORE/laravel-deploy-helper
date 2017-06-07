@@ -1,6 +1,10 @@
 # Laravel Deploy Helper
 
-Laravel >=5.4 compatible
+Compatible with Laravel 5.4 and higher. 
+
+LDH is a Laravel package that helps with deploying your website without the usage of FTP.  
+The LDH packages uses SSH to build a deployment environment on the server for zero-downtime deployments  
+and rollback functionality. 
 
 ## Install
 
@@ -115,5 +119,18 @@ return [
         ]
     ]
 ];
+
+```
+
+## Directory structure
+LDH deploys the following directory structure on first deploy
+```text
+.
+├── current -> /var/www/vhosts/example.org/releases/1496845077
+├── ldh.json
+├── releases
+│   ├── 1496843891
+│   └── 1496845077
+└── shared
 
 ```
