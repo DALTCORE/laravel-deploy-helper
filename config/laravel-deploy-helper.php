@@ -33,7 +33,7 @@ return [
             ],
             'config'     => [
                 'dependencies' => [
-                    'php' => '>=|5.6',
+                    'php' => '>=5.6',
                     'git' => true,
                 ],
                 'keep'         => 4,
