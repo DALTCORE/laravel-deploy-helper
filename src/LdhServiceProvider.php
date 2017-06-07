@@ -3,6 +3,7 @@
 namespace DALTCORE\LaravelDeployHelper;
 
 use DALTCORE\LaravelDeployHelper\Console\Commands\Deploy;
+use DALTCORE\LaravelDeployHelper\Console\Commands\Rollback;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
@@ -33,6 +34,7 @@ class LdhServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Deploy::class,
+                Rollback::class,
             ]);
         }
     }

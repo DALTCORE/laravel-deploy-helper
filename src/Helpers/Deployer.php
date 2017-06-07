@@ -37,6 +37,7 @@ class Deployer
         $home = config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
         $shared = config('laravel-deploy-helper.stages.' . $stage . '.shared');
         $commands = config('laravel-deploy-helper.stages.' . $stage . '.commands');
+        $versions = config('laravel-deploy-helper.stages.' . $stage . '.config.dependencies');
         $keep = config('laravel-deploy-helper.stages.' . $stage . '.config.keep');
 
         // Check what releases are old and can be removed
@@ -44,6 +45,12 @@ class Deployer
         $original = $ldh;
         $ldh = array_slice($ldh, -$keep, $keep, true);
         $toRemove = array_diff_key($original, $ldh);
+
+        // Check versions
+        verbose('[' . $stage . '] Checking dependencies. Migth take a minute.');
+        foreach ($versions as $app => $version) {
+            SSH::checkAppVersion($connection, $app, $version);
+        }
 
         // Define the deploy
         $connection->define('deploy', [

@@ -18,15 +18,9 @@ class Command
      */
     protected static function command($prefix, $args)
     {
-        $builder = new ProcessBuilder();
-        $builder->setPrefix($prefix);
 
-        $cmd = $builder
-            ->setArguments($args)
-            ->getProcess()
-            ->getCommandLine();
 
-        $process = new Process($cmd);
+        $process = new Process(self::builder($prefix, $args));
         $process->run();
 
         // executes after the command finishes
@@ -35,5 +29,22 @@ class Command
         }
 
         return $process->getOutput();
+    }
+
+    /**
+     * @param $prefix
+     * @param $args
+     *
+     * @return string
+     */
+    public static function builder($prefix, $args)
+    {
+        $builder = new ProcessBuilder();
+        $builder->setPrefix($prefix);
+
+        return $builder
+            ->setArguments($args)
+            ->getProcess()
+            ->getCommandLine();
     }
 }
