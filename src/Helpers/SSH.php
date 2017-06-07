@@ -29,6 +29,10 @@ class SSH
     {
         $currVer = null;
 
+        preg_match('/([>=|<=|>=|==|!=|<>|>|<|=]+)(.*)/', $requestedVersion, $match);
+        $operator = isset($match[1]) ? $match[1] : '=';
+        $version = isset($match[2]) ? $match[2] : 0;
+
         /**
          * Check if PHP Exists on server WITH this version
          */
@@ -72,7 +76,7 @@ class SSH
             }
         });
 
-        list($operator, $version) = explode('|', $requestedVersion);
+
         verbose("\t => Checking $app version $currVer $operator $version");
 
         return version_compare($currVer, $version, $operator);
