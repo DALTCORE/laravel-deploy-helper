@@ -1,44 +1,48 @@
 {
-    "name": "daltcore/laravel-deploy-helper",
-    "description": ":package_description",
-    "keywords": [
-        "laravel",
-        "daltcore",
-        "laravel-deploy-helper"
-    ],
-    "homepage": "https://github.com/daltcore/laravel-deploy-helper",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": ":author_website",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php" : ">=5.5.0",
-        "illuminate/support": "~5.2"
-    },
-    "require-dev": {
-        "phpunit/phpunit" : "4.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "DALTCORE\\LaravelDeployHelper\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DALTCORE\\LaravelDeployHelper\\Test\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "phpunit"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+  "name": "daltcore/laravel-deploy-helper",
+  "description": "Helper for Laravel to deploy from artisan",
+  "keywords": [
+    "laravel",
+    "daltcore",
+    "laravel-deploy-helper"
+  ],
+  "homepage": "https://github.com/daltcore/laravel-deploy-helper",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ramon Smit",
+      "email": "rsmit@daltcore.com",
+      "homepage": "https://daltcore.com/",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "illuminate/support": "~5.2",
+    "laravelcollective/remote": "5.4.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload": {
+    "files": [
+      "src/Helpers/helpers.php"
+    ],
+    "psr-4": {
+      "DALTCORE\\LaravelDeployHelper\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DALTCORE\\LaravelDeployHelper\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
 }

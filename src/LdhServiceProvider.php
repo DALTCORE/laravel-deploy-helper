@@ -9,8 +9,8 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  * Class PackageServiceProvider
  *
  * @package Daltcore\LaravelDeployHelper
- * @see http://laravel.com/docs/master/packages#service-providers
- * @see http://laravel.com/docs/master/providers
+ * @see     http://laravel.com/docs/master/packages#service-providers
+ * @see     http://laravel.com/docs/master/providers
  */
 class LdhServiceProvider extends BaseServiceProvider
 {
@@ -57,11 +57,11 @@ class LdhServiceProvider extends BaseServiceProvider
     protected function registerConfigurations()
     {
         $this->mergeConfigFrom(
-            $this->packagePath('config/ldh.php'), 'laravel-deploy-helper'
+            $this->packagePath('config/laravel-deploy-helper.php'), 'laravel-deploy-helper'
         );
         $this->publishes([
-            $this->packagePath('config/ldh.php') => config_path('laravel-deploy-helper.php'),
-        ], 'config');
+            $this->packagePath('config/laravel-deploy-helper.php') => config_path('laravel-deploy-helper.php'),
+        ], 'ldh-config');
     }
 
 
@@ -69,10 +69,11 @@ class LdhServiceProvider extends BaseServiceProvider
      * Loads a path relative to the package base directory
      *
      * @param string $path
+     *
      * @return string
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__ , $path);
+        return sprintf("%s/../%s", __DIR__, $path);
     }
 }

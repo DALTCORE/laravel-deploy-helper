@@ -2,15 +2,18 @@
 
 namespace DALTCORE\LaravelDeployHelper\Helpers;
 
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class Command {
+class Command
+{
     /**
      * Execute command on CLI
      *
-     * @param array $command
+     * @param string $prefix utility to execute
+     * @param array  $args   the arguments to give to the prefix
+     *
      * @return string
      */
     protected static function command($prefix, $args)
