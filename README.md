@@ -1,6 +1,6 @@
 # Laravel Deploy Helper
 
-Laravel Deploy Helper package
+Laravel >=5.4 compatible
 
 ## Install
 
@@ -10,8 +10,6 @@ Via Composer
 $ composer require daltcore/laravel-deploy-helper
 ```
 
-## Usage
-
 In your config/app.php
 ``` php
 DALTCORE\LaravelDeployHelper\LdhServiceProvider::class,
@@ -20,4 +18,16 @@ DALTCORE\LaravelDeployHelper\LdhServiceProvider::class,
 Publish configuration
 ```bash
 $ php artisan vendor:publish --tag=ldh-config
+```
+
+## Usage
+
+Deploy to server
+```bash
+php artisan ldh:deploy --stage=production --branch=develop
+```
+
+Rollback one instance
+```bash
+php artisan ldh:rollback --stage=production
 ```
