@@ -36,7 +36,7 @@ class SSH
         /**
          * Check if PHP Exists on server WITH this version
          */
-        if (strtolower($app) == 'php') {
+        if (strtolower($app) == 'php' && $requestedVersion !== true) {
             $connection->run(Command::builder($app, ['-v']), function ($response) use (&$currVer) {
                 preg_match('/PHP (?<version>.*?[^\s]+)/', $response, $match);
                 $currVer = $match['version'];
@@ -46,9 +46,18 @@ class SSH
         /**
          * Check if Node exists on server with thuis version
          */
-        if (strtolower($app) == 'node' || strtolower($app) == 'nodejs') {
+        if ((strtolower($app) == 'node' || strtolower($app) == 'nodejs') && $requestedVersion !== true) {
             $connection->run(Command::builder($app, ['--version']), function ($response) use (&$currVer) {
                 preg_match('/v(?<version>.*?[^\s]+)/', $response, $match);
+                $currVer = $match['version'];
+            });
+        }
+        /**
+         * Check if composer exists on server with thuis version
+         */
+        if (strtolower($app) == 'composer' && $requestedVersion !== true) {
+            $connection->run(Command::builder($app, ['--version']), function ($response) use (&$currVer) {
+                preg_match('/version (?<version>.*?[^\s]+)/', $response, $match);
                 $currVer = $match['version'];
             });
         }

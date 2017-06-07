@@ -48,6 +48,7 @@ class Deploy extends Command
      */
     public function handle()
     {
+        cli_header();
         // Pre flight checking
         if ($this->option('stage') === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);

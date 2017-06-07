@@ -123,4 +123,28 @@ class Deployer
 
         return $ldh;
     }
+
+    public static function doRollback(Connection $connection, $stage, $ldh, $dirs)
+    {
+        $home = config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
+
+        // Define post deploy actions
+        $connection->define('preformRollback', [
+            'ln -sfn ' . $home . '/releases/' . $dirs[1] . ' ' . $home . '/current',
+            'rm -rf ' . $home . '/releases/' . $dirs[0],
+        ]);
+
+        verbose("\t" . 'Hold my beer, We\'re rolling back');
+        $connection->task('preformRollback');
+
+        unset($dirs[0]);
+        $ldhs = [];
+        foreach ($dirs as $key => $ldh) {
+            $ldhs[$ldh] = true;
+        }
+
+        krsort($ldhs);
+
+        return $ldhs;
+    }
 }

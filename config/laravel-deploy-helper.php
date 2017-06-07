@@ -3,9 +3,10 @@
 return [
     'stages' => [
         'production' => [
-            'git'        => [
+            'git' => [
                 'http' => ''
             ],
+
             'connection' => [
                 'host'     => '',
                 'username' => '',
@@ -16,13 +17,16 @@ return [
                 // 'agent'     => '',
                 'timeout'  => 10,
             ],
-            'remote'     => [
+
+            'remote' => [
                 'root' => '/var/www',
             ],
-            'commands'   => [
+
+            'commands' => [
                 'composer install',
             ],
-            'shared'     => [
+
+            'shared' => [
                 'directories' => [
                     'public',
                     'storage',
@@ -31,7 +35,8 @@ return [
                     '.env'
                 ]
             ],
-            'config'     => [
+
+            'config' => [
                 'dependencies' => [
                     'php' => '>=5.6',
                     'git' => true,

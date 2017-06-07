@@ -34,3 +34,27 @@ if (!function_exists('error')) {
         $console->writeln('<error>' . $message . '</error>');
     }
 }
+
+if (!function_exists('cli_header')) {
+    /**
+     * Output to termial
+     *
+     * @param $message
+     *
+     * @return string formatted for CLI
+     */
+    function cli_header()
+    {
+        echo "\t$$\       $$$$$$$\  $$\   $$\ 
+\t$$ |      $$  __$$\ $$ |  $$ |
+\t$$ |      $$ |  $$ |$$ |  $$ |
+\t$$ |      $$ |  $$ |$$$$$$$$ |
+\t$$ |      $$ |  $$ |$$  __$$ |
+\t$$ |      $$ |  $$ |$$ |  $$ |
+\t$$$$$$$$\ $$$$$$$  |$$ |  $$ |
+\t\________|\_______/ \__|  \__|
+\t    Laravel Deploy Helper
+\tRamon Smit <rsmit@daltcore.com>
+\t\t    1.0.0\n";
+    }
+}
