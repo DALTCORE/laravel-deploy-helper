@@ -47,6 +47,7 @@ class Deployer
 
         // Define the deploy
         $connection->define('deploy', [
+            'mkdir ' . $home . '/releases/' . $releaseName,
             'cd ' . $home . '/releases/' . $releaseName,
             'git clone -b ' . $branch . ' ' . config('laravel-deploy-helper.stages.' . $stage . '.git.http') . ' .'
         ]);

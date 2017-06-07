@@ -51,6 +51,11 @@ class Deploy extends Command
         // Pre flight checking
         if ($this->option('stage') === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);
+        } else {
+            if (!is_array(config('laravel-deploy-helper.stages.' . $this->option('stage')))) {
+                throw new \Exception('The stage "' . $this->option('stage')
+                    . '" does not exist!', 128);
+            }
         }
 
         if ($this->option('branch') === null) {
@@ -65,6 +70,7 @@ class Deploy extends Command
         // Connecting to remote server
         verbose('[' . $this->option('stage') . '] Trying to login into remote SSH');
         $ssh = SSH::instance()->into($this->option('stage'));
+
 
         // Trying to read file
         verbose('[' . $this->option('stage') . '] Reading config file from remote server');
