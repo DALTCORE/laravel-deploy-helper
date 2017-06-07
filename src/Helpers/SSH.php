@@ -29,7 +29,9 @@ class SSH
     {
         $currVer = null;
 
-
+        /**
+         * Check if PHP Exists on server WITH this version
+         */
         if (strtolower($app) == 'php') {
             $connection->run(Command::builder($app, ['-v']), function ($response) use (&$currVer) {
                 preg_match('/PHP (?<version>.*?[^\s]+)/', $response, $match);
@@ -37,6 +39,9 @@ class SSH
             });
         }
 
+        /**
+         * Check if Node exists on server with thuis version
+         */
         if (strtolower($app) == 'node' || strtolower($app) == 'nodejs') {
             $connection->run(Command::builder($app, ['--version']), function ($response) use (&$currVer) {
                 preg_match('/v(?<version>.*?[^\s]+)/', $response, $match);
@@ -44,17 +49,23 @@ class SSH
             });
         }
 
+        /**
+         * Check if application just exists on server
+         */
         if ($requestedVersion === true) {
             $connection->run(Command::builder($app, []), function ($response) use ($app) {
                 if (stripos($response, 'command not found') !== false) {
                     throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
                 }
             });
-            verbose("Checking $app is available");
+            verbose("\t => Checking $app is available");
 
             return true;
         }
 
+        /**
+         * Check if exists
+         */
         $connection->run(Command::builder($app, []), function ($response) use ($app) {
             if (stripos($response, 'command not found') !== false) {
                 throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
@@ -62,7 +73,7 @@ class SSH
         });
 
         list($operator, $version) = explode('|', $requestedVersion);
-        verbose("Checking $app version $currVer $operator $version");
+        verbose("\t => Checking $app version $currVer $operator $version");
 
         return version_compare($currVer, $version, $operator);
     }

@@ -33,8 +33,7 @@ return [
             ],
             'config'     => [
                 'dependencies' => [
-                    // TODO: Fix version checking
-                    'php' => '>=5.6',
+                    'php' => '>=|5.6',
                     'git' => true,
                 ],
                 'keep'         => 4,

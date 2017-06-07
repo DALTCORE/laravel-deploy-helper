@@ -47,6 +47,7 @@ class Deployer
         $toRemove = array_diff_key($original, $ldh);
 
         // Check versions
+        // Operators: http://php.net/manual/en/function.version-compare.php
         verbose('[' . $stage . '] Checking dependencies. Migth take a minute.');
         foreach ($versions as $app => $version) {
             SSH::checkAppVersion($connection, $app, $version);
