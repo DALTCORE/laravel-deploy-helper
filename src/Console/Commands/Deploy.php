@@ -83,14 +83,14 @@ class Deploy extends Command
             if ($this->confirm('Do you want to initialize LDH here?')) {
                 Deployer::freshInit($ssh, $this->option('stage'));
             } else {
-                exit(0);
+                return false;
             }
         } else {
             verbose('[' . $this->option('stage') . '] Found config. Checking directories.');
             $config = $ssh->getString(SSH::home($this->option('stage')) . '/ldh.json');
             if ($config == false) {
                 error('[' . $this->option('stage') . '] Config file is empty... Something is wrong.');
-                exit(0);
+                return false;
             }
             $this->ldh = json_decode($config, true);
         }
