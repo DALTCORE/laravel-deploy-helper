@@ -1,5 +1,7 @@
 # Laravel Deploy Helper
 
+[![Dependency Status](https://www.versioneye.com/user/projects/593e38af0fb24f003de0c84c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/593e38af0fb24f003de0c84c)
+
 Compatible with Laravel 5.4 and higher. 
 
 LDH is a Laravel package that helps with deploying your website without the usage of FTP.  
