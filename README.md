@@ -136,3 +136,6 @@ LDH deploys the following directory structure on first deploy
 └── shared
 
 ```
+
+As you can see, LDH makes a static link from `/current` to `/releases/1496845077`.  
+You you only have to point your vhost to the `/current/public` for your Laravel website to work.
