@@ -23,4 +23,14 @@ class Git extends Command
 
         return $branches;
     }
+
+    /**
+     * Get last commit
+     *
+     * @return string
+     */
+    public static function getLastCommit()
+    {
+        return self::command('git', ['log', '--name-status', 'HEAD^..HEAD']);
+    }
 }

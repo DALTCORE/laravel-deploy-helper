@@ -3,6 +3,7 @@
 namespace DALTCORE\LaravelDeployHelper\Console\Commands;
 
 use DALTCORE\LaravelDeployHelper\Helpers\Deployer;
+use DALTCORE\LaravelDeployHelper\Helpers\Locker;
 use DALTCORE\LaravelDeployHelper\Helpers\SSH;
 use Illuminate\Console\Command;
 
@@ -45,6 +46,7 @@ class Rollback extends Command
     public function handle()
     {
         cli_header();
+
         // Pre flight checking
         if ($this->option('stage') === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);
@@ -58,6 +60,12 @@ class Rollback extends Command
         // Connecting to remote server
         verbose('[' . $this->option('stage') . '] Trying to login into remote SSH');
         $ssh = SSH::instance()->into($this->option('stage'));
+
+        // Check for lockfile
+        if (Locker::lock($ssh, $this->option('stage')) === false) {
+            // Cannot create lock file, stop the process!
+            exit(1);
+        }
 
         // Trying to read file
         verbose('[' . $this->option('stage') . '] Reading config file from remote server');
@@ -90,5 +98,6 @@ class Rollback extends Command
         $this->ldh = Deployer::doRollback($ssh, $this->option('stage'), $this->ldh, $dirs);
         $ssh->putString(SSH::home($this->option('stage')) . '/ldh.json', json_encode($this->ldh));
         verbose('[' . $this->option('stage') . '] Rolled back!');
+        Locker::unlock($ssh, $this->option('stage'));
     }
 }

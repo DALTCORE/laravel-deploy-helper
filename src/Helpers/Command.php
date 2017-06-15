@@ -47,4 +47,16 @@ class Command
             ->getProcess()
             ->getCommandLine();
     }
+
+    /**
+     * Get seeds, if set.
+     */
+    public static function getSeedOptions()
+    {
+        $commit = Git::getLastCommit();
+        preg_match('/\/ldh-seed=(?<seeds>.*[^\s]+)/', $commit, $matches);
+        if (empty($matches) == false || !isset($matches['seeds'])) {
+            dd($matches['seeds']);
+        }
+    }
 }

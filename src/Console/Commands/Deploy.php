@@ -4,6 +4,7 @@ namespace DALTCORE\LaravelDeployHelper\Console\Commands;
 
 use DALTCORE\LaravelDeployHelper\Helpers\Deployer;
 use DALTCORE\LaravelDeployHelper\Helpers\Git;
+use DALTCORE\LaravelDeployHelper\Helpers\Locker;
 use DALTCORE\LaravelDeployHelper\Helpers\SSH;
 use Illuminate\Console\Command;
 
@@ -72,6 +73,11 @@ class Deploy extends Command
         verbose('[' . $this->option('stage') . '] Trying to login into remote SSH');
         $ssh = SSH::instance()->into($this->option('stage'));
 
+        // Check for lockfile
+        if (Locker::lock($ssh, $this->option('stage')) === false) {
+            // Cannot create lock file, stop the process!
+            exit(1);
+        }
 
         // Trying to read file
         verbose('[' . $this->option('stage') . '] Reading config file from remote server');
@@ -90,6 +96,7 @@ class Deploy extends Command
             $config = $ssh->getString(SSH::home($this->option('stage')) . '/ldh.json');
             if ($config == false) {
                 error('[' . $this->option('stage') . '] Config file is empty... Something is wrong.');
+
                 return false;
             }
             $this->ldh = json_decode($config, true);
@@ -103,5 +110,6 @@ class Deploy extends Command
 
         // Done
         verbose('[' . $this->option('stage') . '] Deploy successfull!');
+        Locker::unlock($ssh, $this->option('stage'));
     }
 }
