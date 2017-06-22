@@ -2,7 +2,7 @@
 
 [![Dependency Status](https://www.versioneye.com/user/projects/593e38af0fb24f003de0c84c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/593e38af0fb24f003de0c84c)
 [![StyleCI](https://styleci.io/repos/93638212/shield?branch=master)](https://styleci.io/repos/93638212)
-[![Github All Releases](https://img.shields.io/github/downloads/DALTCORE/laravel-deploy-helper/total.svg?style=flat-square)](https://github.com/DALTCORE/laravel-deploy-helper/archive/master.zip)
+[![Packagist](https://img.shields.io/packagist/v/daltcore/laravel-deploy-helper.svg?style=flat-square)](https://packagist.org/packages/daltcore/laravel-deploy-helper)
 [![Packagist](https://img.shields.io/packagist/dt/daltcore/laravel-deploy-helper.svg?style=flat-square)](https://packagist.org/packages/daltcore/laravel-deploy-helper)
 [![license](https://img.shields.io/github/license/DALTCORE/laravel-deploy-helper.svg?style=flat-square)](https://github.com/DALTCORE/laravel-deploy-helper/blob/master/LICENSE)
 [![Made by DALTCORE](https://img.shields.io/badge/MADE%20BY-DALTCORE-green.svg?style=flat-square)](https://github.com/DALTCORE)
