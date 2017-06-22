@@ -22,7 +22,7 @@ class SSH
      */
     public static function home($stage)
     {
-        return config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
+        return config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
     }
 
     public static function checkAppVersion(Connection $connection, $app, $requestedVersion)
@@ -33,7 +33,7 @@ class SSH
         $operator = isset($match[1]) ? $match[1] : '=';
         $version = isset($match[2]) ? $match[2] : 0;
 
-        /**
+        /*
          * Check if PHP Exists on server WITH this version
          */
         if (strtolower($app) == 'php' && $requestedVersion !== true) {
@@ -43,7 +43,7 @@ class SSH
             });
         }
 
-        /**
+        /*
          * Check if Node exists on server with thuis version
          */
         if ((strtolower($app) == 'node' || strtolower($app) == 'nodejs') && $requestedVersion !== true) {
@@ -52,7 +52,7 @@ class SSH
                 $currVer = $match['version'];
             });
         }
-        /**
+        /*
          * Check if composer exists on server with thuis version
          */
         if (strtolower($app) == 'composer' && $requestedVersion !== true) {
@@ -62,13 +62,13 @@ class SSH
             });
         }
 
-        /**
+        /*
          * Check if application just exists on server
          */
         if ($requestedVersion === true) {
             $connection->run(Command::builder($app, []), function ($response) use ($app) {
                 if (stripos($response, 'command not found') !== false) {
-                    throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
+                    throw new \Exception('ERROR: '.$app.' is not installed on the server.');
                 }
             });
             verbose("\t => Checking $app is available");
@@ -76,15 +76,14 @@ class SSH
             return true;
         }
 
-        /**
+        /*
          * Check if exists
          */
         $connection->run(Command::builder($app, []), function ($response) use ($app) {
             if (stripos($response, 'command not found') !== false) {
-                throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
+                throw new \Exception('ERROR: '.$app.' is not installed on the server.');
             }
         });
-
 
         verbose("\t => Checking $app version $currVer $operator $version");
 

@@ -45,6 +45,7 @@ class Deploy extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
+     *
      * @return mixed
      */
     public function handle()
@@ -54,9 +55,9 @@ class Deploy extends Command
         if ($this->option('stage') === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);
         } else {
-            if (!is_array(config('laravel-deploy-helper.stages.' . $this->option('stage')))) {
-                throw new \Exception('The stage "' . $this->option('stage')
-                    . '" does not exist!', 128);
+            if (!is_array(config('laravel-deploy-helper.stages.'.$this->option('stage')))) {
+                throw new \Exception('The stage "'.$this->option('stage')
+                    .'" does not exist!', 128);
             }
         }
 
@@ -65,12 +66,12 @@ class Deploy extends Command
         }
 
         if (in_array($this->option('branch'), Git::getBranches()) == false) {
-            throw new \Exception('The branch "' . $this->option('branch')
-                . '" does not exists locally? Please `git pull`!', 128);
+            throw new \Exception('The branch "'.$this->option('branch')
+                .'" does not exists locally? Please `git pull`!', 128);
         }
 
         // Connecting to remote server
-        verbose('[' . $this->option('stage') . '] Trying to login into remote SSH');
+        verbose('['.$this->option('stage').'] Trying to login into remote SSH');
         $ssh = SSH::instance()->into($this->option('stage'));
 
         // Check for lockfile
@@ -80,22 +81,22 @@ class Deploy extends Command
         }
 
         // Trying to read file
-        verbose('[' . $this->option('stage') . '] Reading config file from remote server');
-        $config = $ssh->exists(SSH::home($this->option('stage')) . '/ldh.json');
+        verbose('['.$this->option('stage').'] Reading config file from remote server');
+        $config = $ssh->exists(SSH::home($this->option('stage')).'/ldh.json');
 
         // Check if config exists
         if ($config == false) {
-            error('[' . $this->option('stage') . '] ldh.json does not exists.');
+            error('['.$this->option('stage').'] ldh.json does not exists.');
             if ($this->confirm('Do you want to initialize LDH here?')) {
                 Deployer::freshInit($ssh, $this->option('stage'));
             } else {
                 return false;
             }
         } else {
-            verbose('[' . $this->option('stage') . '] Found config. Checking directories.');
-            $config = $ssh->getString(SSH::home($this->option('stage')) . '/ldh.json');
+            verbose('['.$this->option('stage').'] Found config. Checking directories.');
+            $config = $ssh->getString(SSH::home($this->option('stage')).'/ldh.json');
             if ($config == false) {
-                error('[' . $this->option('stage') . '] Config file is empty... Something is wrong.');
+                error('['.$this->option('stage').'] Config file is empty... Something is wrong.');
 
                 return false;
             }
@@ -106,10 +107,10 @@ class Deploy extends Command
         $this->ldh = Deployer::doDeploy($ssh, $this->option('stage'), $this->option('branch'), $this->ldh);
 
         // Write to config
-        $ssh->putString(SSH::home($this->option('stage')) . '/ldh.json', json_encode($this->ldh));
+        $ssh->putString(SSH::home($this->option('stage')).'/ldh.json', json_encode($this->ldh));
 
         // Done
-        verbose('[' . $this->option('stage') . '] Deploy successfull!');
+        verbose('['.$this->option('stage').'] Deploy successfull!');
         Locker::unlock($ssh, $this->option('stage'));
     }
 }

@@ -4,7 +4,7 @@ return [
     'stages' => [
         'production' => [
             'git' => [
-                'http' => ''
+                'http' => '',
             ],
 
             'connection' => [
@@ -32,8 +32,8 @@ return [
                     'storage',
                 ],
                 'files'       => [
-                    '.env'
-                ]
+                    '.env',
+                ],
             ],
 
             'config' => [
@@ -43,6 +43,6 @@ return [
                 ],
                 'keep'         => 4,
             ],
-        ]
-    ]
+        ],
+    ],
 ];

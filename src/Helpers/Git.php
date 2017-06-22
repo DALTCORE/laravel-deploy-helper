@@ -4,9 +4,8 @@ namespace DALTCORE\LaravelDeployHelper\Helpers;
 
 class Git extends Command
 {
-
     /**
-     * Get branches from current git repository
+     * Get branches from current git repository.
      *
      * @return array
      */
@@ -25,7 +24,7 @@ class Git extends Command
     }
 
     /**
-     * Get last commit
+     * Get last commit.
      *
      * @return string
      */

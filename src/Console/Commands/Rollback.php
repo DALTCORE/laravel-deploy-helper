@@ -30,7 +30,6 @@ class Rollback extends Command
 
     /**
      * Create a new command instance.
-     *
      */
     public function __construct()
     {
@@ -41,6 +40,7 @@ class Rollback extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
+     *
      * @return mixed
      */
     public function handle()
@@ -51,14 +51,14 @@ class Rollback extends Command
         if ($this->option('stage') === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);
         } else {
-            if (!is_array(config('laravel-deploy-helper.stages.' . $this->option('stage')))) {
-                throw new \Exception('The stage "' . $this->option('stage')
-                    . '" does not exist!', 128);
+            if (!is_array(config('laravel-deploy-helper.stages.'.$this->option('stage')))) {
+                throw new \Exception('The stage "'.$this->option('stage')
+                    .'" does not exist!', 128);
             }
         }
 
         // Connecting to remote server
-        verbose('[' . $this->option('stage') . '] Trying to login into remote SSH');
+        verbose('['.$this->option('stage').'] Trying to login into remote SSH');
         $ssh = SSH::instance()->into($this->option('stage'));
 
         // Check for lockfile
@@ -68,18 +68,18 @@ class Rollback extends Command
         }
 
         // Trying to read file
-        verbose('[' . $this->option('stage') . '] Reading config file from remote server');
-        $config = $ssh->exists(SSH::home($this->option('stage')) . '/ldh.json');
+        verbose('['.$this->option('stage').'] Reading config file from remote server');
+        $config = $ssh->exists(SSH::home($this->option('stage')).'/ldh.json');
 
         // Check if config exists
         if ($config == false) {
-            error('[' . $this->option('stage') . '] ldh.json does not exists.');
+            error('['.$this->option('stage').'] ldh.json does not exists.');
             exit(128);
         } else {
-            verbose('[' . $this->option('stage') . '] Found config. Checking directories.');
-            $config = $ssh->getString(SSH::home($this->option('stage')) . '/ldh.json');
+            verbose('['.$this->option('stage').'] Found config. Checking directories.');
+            $config = $ssh->getString(SSH::home($this->option('stage')).'/ldh.json');
             if ($config == false) {
-                error('[' . $this->option('stage') . '] Config file is empty... Something is wrong.');
+                error('['.$this->option('stage').'] Config file is empty... Something is wrong.');
                 exit(0);
             }
             $this->ldh = json_decode($config, true);
@@ -96,8 +96,8 @@ class Rollback extends Command
         }
 
         $this->ldh = Deployer::doRollback($ssh, $this->option('stage'), $this->ldh, $dirs);
-        $ssh->putString(SSH::home($this->option('stage')) . '/ldh.json', json_encode($this->ldh));
-        verbose('[' . $this->option('stage') . '] Rolled back!');
+        $ssh->putString(SSH::home($this->option('stage')).'/ldh.json', json_encode($this->ldh));
+        verbose('['.$this->option('stage').'] Rolled back!');
         Locker::unlock($ssh, $this->option('stage'));
     }
 }

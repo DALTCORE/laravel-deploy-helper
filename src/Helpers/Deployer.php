@@ -14,10 +14,10 @@ class Deployer
     {
         // Init fresh remote repo
         $connection->define('init', [
-            'cd ' . config('laravel-deploy-helper.stages.' . $stage . '.remote.root'),
+            'cd '.config('laravel-deploy-helper.stages.'.$stage.'.remote.root'),
             'mkdir releases',
             'mkdir shared',
-            'touch ldh.json'
+            'touch ldh.json',
         ]);
         $connection->task('init');
     }
@@ -34,11 +34,11 @@ class Deployer
     {
         // Some stuff that does not change in runtime
         $releaseName = time();
-        $home = config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
-        $shared = config('laravel-deploy-helper.stages.' . $stage . '.shared');
-        $commands = config('laravel-deploy-helper.stages.' . $stage . '.commands');
-        $versions = config('laravel-deploy-helper.stages.' . $stage . '.config.dependencies');
-        $keep = config('laravel-deploy-helper.stages.' . $stage . '.config.keep');
+        $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
+        $shared = config('laravel-deploy-helper.stages.'.$stage.'.shared');
+        $commands = config('laravel-deploy-helper.stages.'.$stage.'.commands');
+        $versions = config('laravel-deploy-helper.stages.'.$stage.'.config.dependencies');
+        $keep = config('laravel-deploy-helper.stages.'.$stage.'.config.keep');
 
         // Check what releases are old and can be removed
         ksort($ldh);
@@ -48,35 +48,35 @@ class Deployer
 
         // Check versions
         // Operators: http://php.net/manual/en/function.version-compare.php
-        verbose('[' . $stage . '] Checking dependencies. Migth take a minute.');
+        verbose('['.$stage.'] Checking dependencies. Migth take a minute.');
         foreach ($versions as $app => $version) {
             SSH::checkAppVersion($connection, $app, $version);
         }
 
         // Define the deploy
         $connection->define('deploy', [
-            'mkdir ' . $home . '/releases/' . $releaseName,
-            'cd ' . $home . '/releases/' . $releaseName,
-            'git clone -b ' . $branch . ' ' . config('laravel-deploy-helper.stages.' . $stage . '.git.http') . ' .'
+            'mkdir '.$home.'/releases/'.$releaseName,
+            'cd '.$home.'/releases/'.$releaseName,
+            'git clone -b '.$branch.' '.config('laravel-deploy-helper.stages.'.$stage.'.git.http').' .',
         ]);
 
         // Pre-flight for shared stuff
         $items['directories'] = [];
         foreach ($shared['directories'] as $share) {
-            verbose('[' . $stage . '] About to share direcroty "' . $home . '/current/' . $share . '"');
-            $items['directories'][] = '[ -e ' . $home . '/current/' . $share . ' ] && cp -R -p ' . $home . '/current/'
-                . $share . ' ' . $home . '/shared/' . $share;
-            $items['directories'][] = '[ -e ' . $home . '/shared/' . $share . ' ] && cp -R -p ' . $home . '/shared/' .
-                $share . ' ' . $home . '/releases/' . $releaseName;
+            verbose('['.$stage.'] About to share direcroty "'.$home.'/current/'.$share.'"');
+            $items['directories'][] = '[ -e '.$home.'/current/'.$share.' ] && cp -R -p '.$home.'/current/'
+                .$share.' '.$home.'/shared/'.$share;
+            $items['directories'][] = '[ -e '.$home.'/shared/'.$share.' ] && cp -R -p '.$home.'/shared/'.
+                $share.' '.$home.'/releases/'.$releaseName;
         }
         // Pre-flight for shared stuff
         $items['files'] = [];
         foreach ($shared['files'] as $share) {
-            verbose('[' . $stage . '] About to share file "' . $home . '/current/' . $share . '"');
-            $items['files'][] = '[ -e ' . $home . '/current/' . $share . ' ] && cp -p ' . $home . '/current/' . $share
-                . ' ' . $home . '/shared/' . $share;
-            $items['files'][] = '[ -e ' . $home . '/shared/' . $share . ' ] && cp -p ' . $home . '/shared/' . $share .
-                ' ' . $home . '/releases/' . $releaseName . '/' . $share;
+            verbose('['.$stage.'] About to share file "'.$home.'/current/'.$share.'"');
+            $items['files'][] = '[ -e '.$home.'/current/'.$share.' ] && cp -p '.$home.'/current/'.$share
+                .' '.$home.'/shared/'.$share;
+            $items['files'][] = '[ -e '.$home.'/shared/'.$share.' ] && cp -p '.$home.'/shared/'.$share.
+                ' '.$home.'/releases/'.$releaseName.'/'.$share;
         }
 
         // Define shared files
@@ -87,36 +87,36 @@ class Deployer
 
         $items = [];
         foreach ($commands as $command) {
-            $items[] = 'cd ' . $home . '/releases/' . $releaseName . ' && ' . $command;
+            $items[] = 'cd '.$home.'/releases/'.$releaseName.' && '.$command;
         }
         // Define commands
         $connection->define('definedCommands', $items);
 
         // Define post deploy actions
         $connection->define('postDeploy', [
-            'ln -sfn ' . $home . '/releases/' . $releaseName . ' ' . $home . '/current',
-            'rm -rf ' . $home . '/shared/*'
+            'ln -sfn '.$home.'/releases/'.$releaseName.' '.$home.'/current',
+            'rm -rf '.$home.'/shared/*',
         ]);
 
         // Remove old deploys
         $items = [];
         foreach ($toRemove as $dir => $val) {
-            $items[] = 'echo "Removing release ' . $dir . '" && rm -rf ' . $home . '/releases/' . $dir;
+            $items[] = 'echo "Removing release '.$dir.'" && rm -rf '.$home.'/releases/'.$dir;
         }
         $connection->define('removeOld', $items);
 
         // Execute them!
-        verbose('[' . $stage . '] Deploying ' . $branch . ' to server');
+        verbose('['.$stage.'] Deploying '.$branch.' to server');
         $connection->task('deploy');
-        verbose('[' . $stage . '] Handling shared files');
+        verbose('['.$stage.'] Handling shared files');
         $connection->task('getSharedFiles');
-        verbose('[' . $stage . '] Handling shared directories');
+        verbose('['.$stage.'] Handling shared directories');
         $connection->task('getSharedDirectories');
-        verbose('[' . $stage . '] Handling commands');
+        verbose('['.$stage.'] Handling commands');
         $connection->task('definedCommands');
-        verbose('[' . $stage . '] Clean up and linking new instance');
+        verbose('['.$stage.'] Clean up and linking new instance');
         $connection->task('postDeploy');
-        verbose('[' . $stage . '] Remove old deploys');
+        verbose('['.$stage.'] Remove old deploys');
         $connection->task('removeOld');
 
         $ldh[$releaseName] = true;
@@ -126,15 +126,15 @@ class Deployer
 
     public static function doRollback(Connection $connection, $stage, $ldh, $dirs)
     {
-        $home = config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
+        $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
 
         // Define post deploy actions
         $connection->define('preformRollback', [
-            'ln -sfn ' . $home . '/releases/' . $dirs[1] . ' ' . $home . '/current',
-            'rm -rf ' . $home . '/releases/' . $dirs[0],
+            'ln -sfn '.$home.'/releases/'.$dirs[1].' '.$home.'/current',
+            'rm -rf '.$home.'/releases/'.$dirs[0],
         ]);
 
-        verbose("\t" . 'Hold my beer, We\'re rolling back');
+        verbose("\t".'Hold my beer, We\'re rolling back');
         $connection->task('preformRollback');
 
         unset($dirs[0]);
