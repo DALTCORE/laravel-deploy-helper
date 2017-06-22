@@ -1,6 +1,7 @@
 # Laravel Deploy Helper
 
 [![Dependency Status](https://www.versioneye.com/user/projects/593e38af0fb24f003de0c84c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/593e38af0fb24f003de0c84c)
+[![StyleCI](https://styleci.io/repos/93638212/shield?branch=master)](https://styleci.io/repos/93638212)
 
 Compatible with Laravel 5.4 and higher. 
 
