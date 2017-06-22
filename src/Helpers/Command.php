@@ -9,7 +9,7 @@ use Symfony\Component\Process\ProcessBuilder;
 class Command
 {
     /**
-     * Execute command on CLI
+     * Execute command on CLI.
      *
      * @param string $prefix utility to execute
      * @param array  $args   the arguments to give to the prefix
@@ -18,8 +18,6 @@ class Command
      */
     protected static function command($prefix, $args)
     {
-
-
         $process = new Process(self::builder($prefix, $args));
         $process->run();
 

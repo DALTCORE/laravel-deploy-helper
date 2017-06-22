@@ -164,7 +164,7 @@ class RemoteManager
      */
     protected function getConfig($name)
     {
-        $config = $this->app['config']['laravel-deploy-helper.stages.' . $name . '.connection'];
+        $config = $this->app['config']['laravel-deploy-helper.stages.'.$name.'.connection'];
 
         if (!is_null($config)) {
             return $config;
@@ -192,7 +192,7 @@ class RemoteManager
      */
     public function group($name)
     {
-        return $this->connection($this->app['config']['remote.groups.' . $name]);
+        return $this->connection($this->app['config']['remote.groups.'.$name]);
     }
 
     /**

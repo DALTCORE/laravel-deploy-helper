@@ -8,9 +8,8 @@ use DALTCORE\LaravelDeployHelper\Console\Commands\Rollback;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class PackageServiceProvider
+ * Class PackageServiceProvider.
  *
- * @package Daltcore\LaravelDeployHelper
  * @see     http://laravel.com/docs/master/packages#service-providers
  * @see     http://laravel.com/docs/master/providers
  */
@@ -20,6 +19,7 @@ class LdhServiceProvider extends BaseServiceProvider
      * Indicates if loading of the provider is deferred.
      *
      * @see http://laravel.com/docs/master/providers#deferred-providers
+     *
      * @var bool
      */
     protected $defer = false;
@@ -28,6 +28,7 @@ class LdhServiceProvider extends BaseServiceProvider
      * Register the service provider.
      *
      * @see http://laravel.com/docs/master/providers#the-register-method
+     *
      * @return void
      */
     public function register()
@@ -42,9 +43,10 @@ class LdhServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Application is booting
+     * Application is booting.
      *
      * @see http://laravel.com/docs/master/providers#the-boot-method
+     *
      * @return void
      */
     public function boot()
@@ -53,9 +55,10 @@ class LdhServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register the package configurations
+     * Register the package configurations.
      *
      * @see http://laravel.com/docs/master/packages#configuration
+     *
      * @return void
      */
     protected function registerConfigurations()
@@ -68,9 +71,8 @@ class LdhServiceProvider extends BaseServiceProvider
         ], 'ldh-config');
     }
 
-
     /**
-     * Loads a path relative to the package base directory
+     * Loads a path relative to the package base directory.
      *
      * @param string $path
      *
@@ -78,6 +80,6 @@ class LdhServiceProvider extends BaseServiceProvider
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 }

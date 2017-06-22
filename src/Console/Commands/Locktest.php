@@ -35,6 +35,7 @@ class Locktest extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
+     *
      * @return mixed
      */
     public function handle()
@@ -45,21 +46,21 @@ class Locktest extends Command
         if ($this->option('stage') === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);
         } else {
-            if (!is_array(config('laravel-deploy-helper.stages.' . $this->option('stage')))) {
-                throw new \Exception('The stage "' . $this->option('stage')
-                    . '" does not exist!', 128);
+            if (!is_array(config('laravel-deploy-helper.stages.'.$this->option('stage')))) {
+                throw new \Exception('The stage "'.$this->option('stage')
+                    .'" does not exist!', 128);
             }
         }
 
         $stage = $this->option('stage');
 
         // Connecting to remote server
-        verbose('[' . $this->option('stage') . '] Trying to login into remote SSH');
+        verbose('['.$this->option('stage').'] Trying to login into remote SSH');
         $ssh = SSH::instance()->into($this->option('stage'));
 
-        verbose('Setting lock: ' . (Locker::lock($ssh, $stage) ? 'OK' : 'Error'));
-        verbose('Getting lock: ' . (Locker::verify($ssh, $stage) ? 'OK' : 'Error'));
-        verbose('Path to lock: ' . Locker::getLockPath($ssh, $stage));
-        verbose('Destroy lock: ' . (Locker::unlock($ssh, $stage) ? 'OK' : 'Error'));
+        verbose('Setting lock: '.(Locker::lock($ssh, $stage) ? 'OK' : 'Error'));
+        verbose('Getting lock: '.(Locker::verify($ssh, $stage) ? 'OK' : 'Error'));
+        verbose('Path to lock: '.Locker::getLockPath($ssh, $stage));
+        verbose('Destroy lock: '.(Locker::unlock($ssh, $stage) ? 'OK' : 'Error'));
     }
 }
