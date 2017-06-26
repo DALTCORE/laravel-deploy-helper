@@ -15,13 +15,13 @@ env:
   - TESTBENCH_VERSION=3.4.* DATABASE_VERSION=3.4.*@dev ILLUMINATE_VERSION=5.4.*
 
 before_install:
-  - composer global require hirak/prestissimo --update-no-dev
-  - composer global require phpunit/phpunit --update-no-dev
-  - composer require "illuminate/support:${ILLUMINATE_VERSION}" --no-update --prefer-dist
-  - composer require "orchestra/database:${DATABASE_VERSION}" --no-update --prefer-dist
-  - composer require "orchestra/testbench:${TESTBENCH_VERSION}" --no-update --prefer-dist
+  - composer global require hirak/prestissimo
+  - composer global require phpunit/phpunit
+  - composer require "illuminate/support:${ILLUMINATE_VERSION}"
+  - composer require "orchestra/database:${DATABASE_VERSION}"
+  - composer require "orchestra/testbench:${TESTBENCH_VERSION}"
 
-install: composer update --no-interaction --prefer-dist
+install: composer update --no-interaction
 
 script: vendor/bin/phpunit
 
