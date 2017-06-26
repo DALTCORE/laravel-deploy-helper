@@ -22,7 +22,7 @@ class SSH
      */
     public static function home($stage)
     {
-        return config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
+        return config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
     }
 
     public static function checkAppVersion(Connection $connection, $app, $requestedVersion)
@@ -68,7 +68,7 @@ class SSH
         if ($requestedVersion === true) {
             $connection->run(Command::builder($app, []), function ($response) use ($app) {
                 if (stripos($response, 'command not found') !== false) {
-                    throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
+                    throw new \Exception('ERROR: '.$app.' is not installed on the server.');
                 }
             });
             verbose("\t => Checking $app is available");
@@ -81,7 +81,7 @@ class SSH
          */
         $connection->run(Command::builder($app, []), function ($response) use ($app) {
             if (stripos($response, 'command not found') !== false) {
-                throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
+                throw new \Exception('ERROR: '.$app.' is not installed on the server.');
             }
         });
 
@@ -91,14 +91,14 @@ class SSH
     }
 
     /**
-     * Use a fresh connection to prevent
+     * Use a fresh connection to prevent.
      *
      * @param $stage
      * @param $commands
      */
     public static function execute($stage, $commands)
     {
-        $connection = SSH::instance()->into($stage);
+        $connection = self::instance()->into($stage);
         $connection->run($commands);
         unset($connection);
     }
