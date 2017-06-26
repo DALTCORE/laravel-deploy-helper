@@ -55,13 +55,11 @@ class Deployer
 
         // Define the deploy
         verbose('[' . $stage . '] Creating new release directory and pulling from remote');
-        $connection = SSH::instance()->into($stage);
-        $connection->run([
+        SSH::execute($stage, [
             'mkdir ' . $home . '/releases/' . $releaseName,
             'cd ' . $home . '/releases/' . $releaseName,
             'git clone -b ' . $branch . ' ' . config('laravel-deploy-helper.stages.' . $stage . '.git.http') . ' .',
         ]);
-        unset($connection);
 
         // Pre-flight for shared stuff
         $items['directories'] = [];
@@ -84,15 +82,11 @@ class Deployer
 
         // Define shared files
         verbose('[' . $stage . '] Syncing shared files');
-        $connection = SSH::instance()->into($stage);
-        $connection->run($items['files']);
-        unset($connection);
+        SSH::execute($stage, $items['files']);
 
         // Define shared directories
         verbose('[' . $stage . '] Syncing shared directories');
-        $connection = SSH::instance()->into($stage);
-        $connection->run($items['directories']);
-        unset($connection);
+        SSH::execute($stage, $items['directories']);
 
         $items = [];
         foreach ($commands as $command) {
@@ -100,18 +94,14 @@ class Deployer
         }
         // Define commands
         verbose('[' . $stage . '] Executing custom commands');
-        $connection = SSH::instance()->into($stage);
-        $connection->run($items);
-        unset($connection);
+        SSH::execute($stage, $items);
 
         // Define post deploy actions
         verbose('[' . $stage . '] Linking new release to /current directory and removing temp');
-        $connection = SSH::instance()->into($stage);
-        $connection->run([
+        SSH::execute($stage, [
             'ln -sfn ' . $home . '/releases/' . $releaseName . ' ' . $home . '/current',
             'rm -rf ' . $home . '/shared/*',
         ]);
-        unset($connection);
 
         // Remove old deploys
         $items = [];
@@ -119,14 +109,11 @@ class Deployer
             $items[] = 'echo "Removing release ' . $dir . '" && rm -rf ' . $home . '/releases/' . $dir;
         }
         verbose('[' . $stage . '] Cleaning up old releases');
-        $connection = SSH::instance()->into($stage);
-        $connection->run($items);
-        unset($connection);
+        SSH::execute($stage, $items);
 
         $ldh[$releaseName] = true;
 
         return $ldh;
-
     }
 
     /*
