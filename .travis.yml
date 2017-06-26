@@ -16,6 +16,7 @@ env:
 
 before_install:
   - composer global require hirak/prestissimo --update-no-dev
+  - composer global require phpunit/phpunit --update-no-dev
   - composer require "illuminate/support:${ILLUMINATE_VERSION}" --no-update --prefer-dist
   - composer require "orchestra/database:${DATABASE_VERSION}" --no-update --prefer-dist
   - composer require "orchestra/testbench:${TESTBENCH_VERSION}" --no-update --prefer-dist
