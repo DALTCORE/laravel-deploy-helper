@@ -62,7 +62,7 @@ class Rollback extends Command
         // Write to config
         SSH::instance()
             ->into($this->option('stage'))
-            ->putString(SSH::home($this->option('stage')) . '/ldh.json', json_encode($this->ldh));
+            ->putString(SSH::home($this->option('stage')).'/ldh.json', json_encode($this->ldh));
 
         SSH::performLanding($this->option('stage'));
     }
