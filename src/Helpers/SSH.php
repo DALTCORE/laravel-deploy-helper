@@ -91,15 +91,97 @@ class SSH
     }
 
     /**
-     * Use a fresh connection to prevent
+     * Use a fresh connection to prevent.
      *
      * @param $stage
      * @param $commands
      */
     public static function execute($stage, $commands)
     {
-        $connection = SSH::instance()->into($stage);
+        $connection = self::instance()->into($stage);
         $connection->run($commands);
         unset($connection);
+    }
+
+    /**
+     * Pre flight checks before the deploy happens
+     *
+     * @param $instance
+     * @param $stage
+     * @param $branch
+     *
+     * @return bool|mixed
+     * @throws \Exception
+     */
+    public static function preFlight($instance, $stage, $branch = false)
+    {
+        cli_header();
+
+        // Pre flight checking
+        if ($stage === null) {
+            throw new \Exception('The argument "--stage=" is required!', 128);
+        } else {
+            if (!is_array(config('laravel-deploy-helper.stages.' . $stage))) {
+                throw new \Exception('The stage "' . $stage
+                    . '" does not exist!', 128);
+            }
+        }
+
+        if ($branch != false) {
+            if ($branch === null) {
+                throw new \Exception('The argument "--branch=" is required!', 128);
+            }
+
+            if (in_array($branch, Git::getBranches()) == false) {
+                throw new \Exception('The branch "' . $branch
+                    . '" does not exists locally? Please `git pull`!', 128);
+            }
+        }
+
+        // Connecting to remote server
+        verbose('[' . $stage . '] Trying to login into remote SSH');
+        $ssh = SSH::instance()->into($stage);
+
+        // Check for lockfile
+        if (Locker::lock($ssh, $stage) === false) {
+            // Cannot create lock file, stop the process!
+            exit(1);
+        }
+
+        // Trying to read file
+        verbose('[' . $stage . '] Reading config file from remote server');
+        $config = $ssh->exists(SSH::home($stage) . '/ldh.json');
+
+        // Check if config exists
+        if ($config == false) {
+            error('[' . $stage . '] ldh.json does not exists.');
+            if ($instance->confirm('Do you want to initialize LDH here?')) {
+                Deployer::freshInit($ssh, $stage);
+            } else {
+                return false;
+            }
+        } else {
+            verbose('[' . $stage . '] Found config. Checking directories.');
+            $config = $ssh->getString(SSH::home($stage) . '/ldh.json');
+            if ($config == false) {
+                error('[' . $stage . '] Config file is empty... Something is wrong.');
+
+                return false;
+            }
+
+            return json_decode($config, true);
+        }
+    }
+
+    /**
+     * End of command
+     *
+     * @param $stage
+     */
+    public static function performLanding($stage)
+    {
+        $ssh = SSH::instance()->into($stage);
+        Locker::unlock($ssh, $stage);
+        verbose('[' . $stage . '] Changes are successfull!');
     }
 }

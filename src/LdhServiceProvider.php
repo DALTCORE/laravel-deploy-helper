@@ -4,6 +4,7 @@ namespace DALTCORE\LaravelDeployHelper;
 
 use DALTCORE\LaravelDeployHelper\Console\Commands\Deploy;
 use DALTCORE\LaravelDeployHelper\Console\Commands\Locktest;
+use DALTCORE\LaravelDeployHelper\Console\Commands\Patch;
 use DALTCORE\LaravelDeployHelper\Console\Commands\Rollback;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -38,6 +39,7 @@ class LdhServiceProvider extends BaseServiceProvider
                 Deploy::class,
                 Rollback::class,
                 Locktest::class,
+                Patch::class,
             ]);
         }
     }

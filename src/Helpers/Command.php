@@ -30,8 +30,8 @@ class Command
     }
 
     /**
-     * @param $prefix
-     * @param $args
+     * @param       $prefix
+     * @param array $args
      *
      * @return string
      */

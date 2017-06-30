@@ -6,23 +6,23 @@ use DALTCORE\LaravelDeployHelper\Helpers\Deployer;
 use DALTCORE\LaravelDeployHelper\Helpers\SSH;
 use Illuminate\Console\Command;
 
-class Deploy extends Command
+class Patch extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ldh:deploy 
+    protected $signature = 'ldh:patch 
                             {--stage= : Server that needs a deploy} 
-                            {--branch= : Branch that is going to be deployed to stage}';
+                            {--branch= : Branch that is going to be patched to stage}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deploy this project to a sever';
+    protected $description = 'Deploy minor-change patches';
 
     /**
      * @var array
@@ -49,15 +49,10 @@ class Deploy extends Command
     public function handle()
     {
         // Do some pre-deploy checks
-        $this->ldh = SSH::preFlight($this, $this->option('stage'), $this->option('branch'));
+        SSH::preFlight($this, $this->option('stage'), $this->option('branch'));
 
-        // Do deploy
-        $this->ldh = Deployer::doDeploy($this->option('stage'), $this->option('branch'), $this->ldh);
-
-        // Write to config
-        SSH::instance()
-            ->into($this->option('stage'))
-            ->putString(SSH::home($this->option('stage')) . '/ldh.json', json_encode($this->ldh));
+        // Get the band-aid, we're going to patch some shit
+        Deployer::doPatch($ssh, $this->option('stage'), $this->option('branch'));
 
         // Done
         SSH::performLanding($this->option('stage'));

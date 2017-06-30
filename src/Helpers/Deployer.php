@@ -16,6 +16,7 @@ class Deployer
         $connection->define('init', [
             'cd ' . config('laravel-deploy-helper.stages.' . $stage . '.remote.root'),
             'mkdir releases',
+            'mkdir patches',
             'mkdir shared',
             'touch ldh.json',
         ]);
@@ -30,7 +31,7 @@ class Deployer
      *
      * @return int
      */
-    public static function doDeploy(Connection $connection, $stage, $branch, $ldh)
+    public static function doDeploy($stage, $branch, $ldh)
     {
         // Some stuff that does not change in runtime
         $releaseName = time();
@@ -45,6 +46,9 @@ class Deployer
         $original = $ldh;
         $ldh = array_slice($ldh, -$keep, $keep, true);
         $toRemove = array_diff_key($original, $ldh);
+
+        // setup ssh connection to remote
+        $connection = SSH::instance()->into($stage);
 
         // Check versions
         // Operators: http://php.net/manual/en/function.version-compare.php
@@ -141,5 +145,25 @@ class Deployer
         krsort($ldhs);
 
         return $ldhs;
+    }
+
+    public static function doPatch(Connection $connection, $stage, $branch)
+    {
+        $home = config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
+
+        dd(Command::builder('git',
+            ['apply', '--reject', '--whitespace=fix', '--directory=' . $home . '/patches/*.patch']));
+
+        $connection->define('preformPatch', [
+            Command::builder('cd', [$home . '/current']),
+            Command::builder('ls', ['-haml']),
+            Command::builder('git', ['fetch']),
+            Command::builder('git', ['format-patch', 'origin/' . $branch, 'FETCH_HEAD', '-o', $home . '/patches']),
+            Command::builder('git',
+                ['apply', '--reject', '--whitespace=fix', '--directory=' . $home . '/patches/*.patch']),
+        ]);
+
+        verbose("\t" . 'Hold on tight, trying to patch!');
+        $connection->task('preformPatch');
     }
 }
