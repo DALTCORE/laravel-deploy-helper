@@ -52,7 +52,7 @@ class Patch extends Command
         SSH::preFlight($this, $this->option('stage'), $this->option('branch'));
 
         // Get the band-aid, we're going to patch some shit
-        Deployer::doPatch($ssh, $this->option('stage'), $this->option('branch'));
+        Deployer::doPatch($this->option('stage'), $this->option('branch'));
 
         // Done
         SSH::performLanding($this->option('stage'));
