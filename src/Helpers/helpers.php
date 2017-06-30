@@ -15,7 +15,7 @@ if (!function_exists('verbose')) {
     {
         $console = new ConsoleOutput();
         $console->getFormatter()->setStyle('info', new OutputFormatterStyle('blue', null));
-        $console->writeln('<info>'.$message.'</info>');
+        $console->writeln('<info>' . $message . '</info>');
     }
 }
 
@@ -31,7 +31,7 @@ if (!function_exists('error')) {
     {
         $console = new ConsoleOutput();
         $console->getFormatter()->setStyle('error', new OutputFormatterStyle('white', 'red'));
-        $console->writeln('<error>'.$message.'</error>');
+        $console->writeln('<error>' . $message . '</error>');
     }
 }
 
@@ -55,6 +55,6 @@ if (!function_exists('cli_header')) {
 \t\________|\_______/ \__|  \__|
 \t    Laravel Deploy Helper
 \tRamon Smit <rsmit@daltcore.com>
-\t\t    1.0.5\n";
+\t\t    1.0.6\n";
     }
 }
