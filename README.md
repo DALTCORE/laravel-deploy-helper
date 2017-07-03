@@ -142,13 +142,13 @@ return [
 LDH deploys the following directory structure on first deploy
 ```text
 .
-├── current -> /var/www/vhosts/example.org/releases/1496845077
+├── current -> /var/www/vhosts/example.org/releases/1498833243
 ├── ldh.json
+├── patches
+│   └── 0001-Update-readme.md.patch
 ├── releases
-│   ├── 1496843891
-│   └── 1496845077
+│   └── 1498833243
 └── shared
-
 ```
 
 As you can see, LDH makes a static link from `/current` to `/releases/1496845077`.  
