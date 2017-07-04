@@ -19,7 +19,7 @@ and rollback functionality.
 Via Composer
 
 ``` bash
-$ composer require daltcore/laravel-deploy-helper v0.5.1
+$ composer require daltcore/laravel-deploy-helper v0.5.2
 ```
 
 In your config/app.php
