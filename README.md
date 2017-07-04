@@ -8,7 +8,7 @@
 [![Made by DALTCORE](https://img.shields.io/badge/MADE%20BY-DALTCORE-green.svg?style=flat-square)](https://github.com/DALTCORE)
 
 
-Compatible with Laravel 5.4 and higher. 
+Compatible with Laravel 5.1 and higher. 
 
 LDH is a Laravel package that helps with deploying your website without the usage of FTP.  
 The LDH packages uses SSH to build a deployment environment on the server for zero-downtime deployments  
@@ -19,7 +19,7 @@ and rollback functionality.
 Via Composer
 
 ``` bash
-$ composer require daltcore/laravel-deploy-helper
+$ composer require daltcore/laravel-deploy-helper v0.5.1
 ```
 
 In your config/app.php
