@@ -16,6 +16,8 @@ LDH is a Laravel package that helps with deploying your website without the usag
 The LDH packages uses SSH to build a deployment environment on the server for zero-downtime deployments  
 and rollback functionality. 
 
+**Everyone is allowed to help getting this package bigger and better! ;-)**
+
 ## Install
 
 Via Composer
