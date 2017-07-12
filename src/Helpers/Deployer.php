@@ -114,7 +114,7 @@ class Deployer
         ]);
 
         // Remove old deploys
-        if (is_array($toRemove)) {
+        if (isset($toRemove) && is_array($toRemove)) {
             $items = [];
             foreach ($toRemove as $dir => $val) {
                 $items[] = 'echo "Removing release ' . $dir . '" && rm -rf ' . $home . '/releases/' . $dir;
