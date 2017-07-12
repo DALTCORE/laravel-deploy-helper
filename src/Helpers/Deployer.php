@@ -62,10 +62,11 @@ class Deployer
 
         // Define the deploy
         verbose('[' . $stage . '] Creating new release directory and pulling from remote');
+        $git = addcslashes(config('laravel-deploy-helper.stages.' . $stage . '.git.http'), '$&');
         SSH::execute($stage, [
             'mkdir ' . $home . '/releases/' . $releaseName,
             'cd ' . $home . '/releases/' . $releaseName,
-            'git clone -b ' . $branch . ' ' . config('laravel-deploy-helper.stages.' . $stage . '.git.http') . ' .',
+            'git clone -b ' . $branch . ' ' . $git . ' .',
         ]);
 
         // Pre-flight for shared stuff
