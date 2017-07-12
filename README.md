@@ -34,19 +34,19 @@ $ php artisan vendor:publish --tag=ldh-config
 
 ## Usage
 
-*Deploy to server*
+*Deploy to server*  
 Deploy full instance to the remote server
 ```bash
 php artisan ldh:deploy --stage=production --branch=develop
 ```
 
-*Patch to server*
+*Patch to server*  
 Push a simple patch to the remote server (minor changes only)
 ```bash
 php artisan ldh:patch --stage=production --branch=patch
 ```
 
-*Rollback one instance*
+*Rollback one instance*  
 Something went horrably wrong, go back in history
 ```bash
 php artisan ldh:rollback --stage=production
