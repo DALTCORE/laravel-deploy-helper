@@ -62,6 +62,8 @@ class Deployer
 
         // Define the deploy
         verbose('[' . $stage . '] Creating new release directory and pulling from remote');
+
+        // Trying to escape special characters #6
         $git = addcslashes(config('laravel-deploy-helper.stages.' . $stage . '.git.http'), '$&');
         SSH::execute($stage, [
             'mkdir ' . $home . '/releases/' . $releaseName,
