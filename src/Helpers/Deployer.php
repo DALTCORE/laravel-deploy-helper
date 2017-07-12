@@ -42,10 +42,13 @@ class Deployer
         $keep = config('laravel-deploy-helper.stages.' . $stage . '.config.keep');
 
         // Check what releases are old and can be removed
-        ksort($ldh);
-        $original = $ldh;
-        $ldh = array_slice($ldh, -$keep, $keep, true);
-        $toRemove = array_diff_key($original, $ldh);
+        // Adding the array fixed #1
+        if (is_array($ldh)) {
+            ksort($ldh);
+            $original = $ldh;
+            $ldh = array_slice($ldh, -$keep, $keep, true);
+            $toRemove = array_diff_key($original, $ldh);
+        }
 
         // setup ssh connection to remote
         $connection = SSH::instance()->into($stage);
@@ -108,12 +111,14 @@ class Deployer
         ]);
 
         // Remove old deploys
-        $items = [];
-        foreach ($toRemove as $dir => $val) {
-            $items[] = 'echo "Removing release ' . $dir . '" && rm -rf ' . $home . '/releases/' . $dir;
+        if (is_array($toRemove)) {
+            $items = [];
+            foreach ($toRemove as $dir => $val) {
+                $items[] = 'echo "Removing release ' . $dir . '" && rm -rf ' . $home . '/releases/' . $dir;
+            }
+            verbose('[' . $stage . '] Cleaning up old releases');
+            SSH::execute($stage, $items);
         }
-        verbose('[' . $stage . '] Cleaning up old releases');
-        SSH::execute($stage, $items);
 
         $ldh[$releaseName] = true;
 
@@ -169,7 +174,7 @@ class Deployer
             Command::builder('git',
                 ['format-patch', '-1', 'origin/' . $branch, 'FETCH_HEAD', '-o', $home . '/patches']),
             'git apply --reject --whitespace=fix ' . $home . '/patches/*',
-            Command::builder('rm', ['-rf', $home . '/patches'])
+            Command::builder('rm', ['-rf', $home . '/patches']),
         ]);
 
         verbose("\t" . 'Hold on tight, trying to patch!');
