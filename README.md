@@ -8,11 +8,15 @@
 [![Made by DALTCORE](https://img.shields.io/badge/MADE%20BY-DALTCORE-green.svg?style=flat-square)](https://github.com/DALTCORE)
 
 
-Compatible with Laravel 5.4 and higher. 
+Compatible with Laravel [5.1](https://github.com/DALTCORE/laravel-deploy-helper/tree/5.1), 5.4 and higher. 
+
+**For Laravel 5.1 use branch 5.1 and tag v0.5.x**
 
 LDH is a Laravel package that helps with deploying your website without the usage of FTP.  
 The LDH packages uses SSH to build a deployment environment on the server for zero-downtime deployments  
 and rollback functionality. 
+
+**Everyone is allowed to help getting this package bigger and better! ;-)**
 
 ## Install
 
@@ -34,19 +38,19 @@ $ php artisan vendor:publish --tag=ldh-config
 
 ## Usage
 
-*Deploy to server*
+*Deploy to server*  
 Deploy full instance to the remote server
 ```bash
 php artisan ldh:deploy --stage=production --branch=develop
 ```
 
-*Patch to server*
+*Patch to server*  
 Push a simple patch to the remote server (minor changes only)
 ```bash
 php artisan ldh:patch --stage=production --branch=patch
 ```
 
-*Rollback one instance*
+*Rollback one instance*  
 Something went horrably wrong, go back in history
 ```bash
 php artisan ldh:rollback --stage=production
@@ -142,13 +146,13 @@ return [
 LDH deploys the following directory structure on first deploy
 ```text
 .
-├── current -> /var/www/vhosts/example.org/releases/1496845077
+├── current -> /var/www/vhosts/example.org/releases/1498833243
 ├── ldh.json
+├── patches
+│   └── 0001-Update-readme.md.patch
 ├── releases
-│   ├── 1496843891
-│   └── 1496845077
+│   └── 1498833243
 └── shared
-
 ```
 
 As you can see, LDH makes a static link from `/current` to `/releases/1496845077`.  
