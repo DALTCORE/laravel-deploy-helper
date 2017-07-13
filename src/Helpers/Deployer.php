@@ -55,7 +55,7 @@ class Deployer
 
         // Check versions
         // Operators: http://php.net/manual/en/function.version-compare.php
-        verbose('['.$stage.'] Checking dependencies. Migth take a minute.');
+        verbose('['.$stage.'] Checking dependencies. Might take a minute.');
         foreach ($versions as $app => $version) {
             SSH::checkAppVersion($connection, $app, $version);
         }
