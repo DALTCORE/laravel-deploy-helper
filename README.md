@@ -61,8 +61,9 @@ php artisan ldh:rollback --stage=production
 `stages`  
 In the stages section you have to define your stages information.
 
-`git.http`  
-For now I'm using git's http url with basic auth _http://user:pass@git.server/repo.git_
+`git`  
+You can use git's http url with basic auth. Example: _https://username:password@github.com/repo/name.git_ .  
+You can use git's ssh. Example: _git@github.com:repo/name.git_
 
 `connection`  
 In the connection section you can add your ssh details for deploying
