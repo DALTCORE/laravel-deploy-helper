@@ -63,8 +63,11 @@ class Deployer
         // Define the deploy
         verbose('['.$stage.'] Creating new release directory and pulling from remote');
 
-        // Trying to escape special characters #6
         $url = config('laravel-deploy-helper.stages.'.$stage.'.git.http');
+        // Fixes https://github.com/DALTCORE/laravel-deploy-helper/issues/6#issuecomment-315124310
+        if ($url === null) {
+            $url = config('laravel-deploy-helper.stages.'.$stage.'.git');
+        }
 
         SSH::execute($stage, [
             'mkdir '.$home.'/releases/'.$releaseName,
@@ -75,7 +78,7 @@ class Deployer
         // Pre-flight for shared stuff
         $items['directories'] = [];
         foreach ($shared['directories'] as $share) {
-            verbose('['.$stage.'] About to share direcroty "'.$home.'/current/'.$share.'"');
+            verbose('['.$stage.'] About to share directory "'.$home.'/current/'.$share.'"');
             $items['directories'][] = '[ -e '.$home.'/current/'.$share.' ] && cp -R -p '.$home.'/current/'
                 .$share.' '.$home.'/shared/'.$share;
             $items['directories'][] = '[ -e '.$home.'/shared/'.$share.' ] && cp -R -p '.$home.'/shared/'.
