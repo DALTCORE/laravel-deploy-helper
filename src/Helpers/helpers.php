@@ -15,7 +15,7 @@ if (!function_exists('verbose')) {
     {
         $console = new ConsoleOutput();
         $console->getFormatter()->setStyle('info', new OutputFormatterStyle('blue', null));
-        $console->writeln('<info>' . $message . '</info>');
+        $console->writeln('<info>'.$message.'</info>');
     }
 }
 
@@ -31,7 +31,7 @@ if (!function_exists('error')) {
     {
         $console = new ConsoleOutput();
         $console->getFormatter()->setStyle('error', new OutputFormatterStyle('white', 'red'));
-        $console->writeln('<error>' . $message . '</error>');
+        $console->writeln('<error>'.$message.'</error>');
     }
 }
 
