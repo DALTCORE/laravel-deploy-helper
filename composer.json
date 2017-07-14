@@ -22,7 +22,8 @@
     "laravelcollective/remote": "5.4.*"
   },
   "require-dev": {
-    "sebastiaanluca/laravel-helpers": "^1.0"
+    "sebastiaanluca/laravel-helpers": "^1.0",
+    "phpunit/phpunit": " ^6.1"
   },
   "autoload": {
     "files": [
