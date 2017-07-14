@@ -22,7 +22,7 @@ class SSH
      */
     public static function home($stage)
     {
-        return config('laravel-deploy-helper.stages.' . $stage . '.remote.root');
+        return config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
     }
 
     /**
@@ -75,7 +75,7 @@ class SSH
         if ($requestedVersion === true) {
             $connection->run(Command::builder($app, []), function ($response) use ($app) {
                 if (stripos($response, 'command not found') !== false) {
-                    throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
+                    throw new \Exception('ERROR: '.$app.' is not installed on the server.');
                 }
             });
             verbose("\t => Checking $app is available");
@@ -88,7 +88,7 @@ class SSH
          */
         $connection->run(Command::builder($app, []), function ($response) use ($app) {
             if (stripos($response, 'command not found') !== false) {
-                throw new \Exception('ERROR: ' . $app . ' is not installed on the server.');
+                throw new \Exception('ERROR: '.$app.' is not installed on the server.');
             }
         });
 
@@ -129,9 +129,9 @@ class SSH
         if ($stage === null) {
             throw new \Exception('The argument "--stage=" is required!', 128);
         } else {
-            if (!is_array(config('laravel-deploy-helper.stages.' . $stage))) {
-                throw new \Exception('The stage "' . $stage
-                    . '" does not exist!', 128);
+            if (!is_array(config('laravel-deploy-helper.stages.'.$stage))) {
+                throw new \Exception('The stage "'.$stage
+                    .'" does not exist!', 128);
             }
         }
 
@@ -141,13 +141,13 @@ class SSH
             }
 
             if (in_array($branch, Git::getBranches()) == false) {
-                throw new \Exception('The branch "' . $branch
-                    . '" does not exists locally? Please `git pull`!', 128);
+                throw new \Exception('The branch "'.$branch
+                    .'" does not exists locally? Please `git pull`!', 128);
             }
         }
 
         // Connecting to remote server
-        verbose('[' . $stage . '] Trying to login into remote SSH');
+        verbose('['.$stage.'] Trying to login into remote SSH');
         $ssh = self::instance()->into($stage);
 
         // Check for lockfile
@@ -157,22 +157,22 @@ class SSH
         }
 
         // Trying to read file
-        verbose('[' . $stage . '] Reading config file from remote server');
-        $config = $ssh->exists(self::home($stage) . '/ldh.json');
+        verbose('['.$stage.'] Reading config file from remote server');
+        $config = $ssh->exists(self::home($stage).'/ldh.json');
 
         // Check if config exists
         if ($config == false) {
-            error('[' . $stage . '] ldh.json does not exists.');
+            error('['.$stage.'] ldh.json does not exists.');
             if ($instance->confirm('Do you want to initialize LDH here?')) {
                 Deployer::freshInit($ssh, $stage);
             } else {
                 return false;
             }
         } else {
-            verbose('[' . $stage . '] Found config. Checking directories.');
-            $config = $ssh->getString(self::home($stage) . '/ldh.json');
+            verbose('['.$stage.'] Found config. Checking directories.');
+            $config = $ssh->getString(self::home($stage).'/ldh.json');
             if ($config == false) {
-                error('[' . $stage . '] Config file is empty... Something is wrong.');
+                error('['.$stage.'] Config file is empty... Something is wrong.');
 
                 return false;
             }
@@ -190,6 +190,6 @@ class SSH
     {
         $ssh = self::instance()->into($stage);
         Locker::unlock($ssh, $stage);
-        verbose('[' . $stage . '] Changes are successfull!');
+        verbose('['.$stage.'] Changes are successfull!');
     }
 }
