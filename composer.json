@@ -19,7 +19,8 @@
   "require": {
     "php": ">=5.6.0",
     "illuminate/support": "~5.2",
-    "laravelcollective/remote": "5.4.*"
+    "laravelcollective/remote": "5.4.*",
+    "composer/semver": "^1.4"
   },
   "require-dev": {
     "sebastiaanluca/laravel-helpers": "^1.0",
