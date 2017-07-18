@@ -57,12 +57,12 @@ class Deployer
         // Operators: http://php.net/manual/en/function.version-compare.php
         verbose('[' . $stage . '] Checking dependencies. Might take a minute.');
         foreach ($versions as $app => $version) {
-            if (SSH::checkAppVersion($connection, $app, $version) == '-1') {
-                throw new \Exception('Version of ' . $app . ' does not match your requirements');
-            }
+//            if (SSH::checkAppVersion($connection, $app, $version) == '-1') {
+//                Locker::unlock($connection, $stage);
+//                throw new \Exception('Version of ' . $app . ' does not match your requirements');
+//            }
+            SSH::checkAppVersion($connection, $app, $version);
         }
-
-        return $ldh;
 
         // Define the deploy
         verbose('[' . $stage . '] Creating new release directory and pulling from remote');
