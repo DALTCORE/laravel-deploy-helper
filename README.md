@@ -97,9 +97,7 @@ Config example:
 return [
     'stages' => [
         'production' => [
-            'git' => [
-                'http' => ''
-            ],
+            'git' => '',
 
             'connection' => [
                 'host'     => '',
