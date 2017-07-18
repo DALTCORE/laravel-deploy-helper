@@ -28,8 +28,9 @@ class Deployer
      * @param $branch
      * @param $ldh
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public static function doDeploy($stage, $branch, $ldh)
     {
