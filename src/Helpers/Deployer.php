@@ -58,7 +58,7 @@ class Deployer
         // Operators: http://php.net/manual/en/function.version-compare.php
         verbose('[' . $stage . '] Checking dependencies. Might take a minute.');
         foreach ($versions as $app => $version) {
-//            if (SSH::checkAppVersion($connection, $app, $version) == '-1') {
+            //            if (SSH::checkAppVersion($connection, $app, $version) == '-1') {
 //                Locker::unlock($connection, $stage);
 //                throw new \Exception('Version of ' . $app . ' does not match your requirements');
 //            }
@@ -78,7 +78,7 @@ class Deployer
             $stage,
             [
                 'cd ' . $home . '/releases/' . $releaseName . '; ' .
-                'git clone -b ' . $branch . ' ' . "'" . $url . "'" . ' .'
+                'git clone -b ' . $branch . ' ' . "'" . $url . "'" . ' .',
             ]
         );
 
@@ -87,11 +87,11 @@ class Deployer
         foreach ($shared['directories'] as $share) {
             verbose('[' . $stage . '] About to share directory "' . $home . '/current/' . $share . '"');
             SSH::execute($stage, ['[ -e ' . $home . '/current/' . $share . ' ] && cp -R -p ' . $home . '/current/'
-                . $share . ' ' . $home . '/shared/' . $share]);
+                . $share . ' ' . $home . '/shared/' . $share,]);
             SSH::execute(
                 $stage,
                 [$items['directories'][] = '[ -e ' . $home . '/shared/' . $share . ' ] && cp -R -p ' . $home .
-                    '/shared/' . $share . ' ' . $home . '/releases/' . $releaseName]
+                    '/shared/' . $share . ' ' . $home . '/releases/' . $releaseName,]
             );
         }
         // Pre-flight for shared stuff
@@ -99,9 +99,9 @@ class Deployer
         foreach ($shared['files'] as $share) {
             verbose('[' . $stage . '] About to share file "' . $home . '/current/' . $share . '"');
             SSH::execute($stage, ['[ -e ' . $home . '/current/' . $share . ' ] && cp -p ' . $home . '/current/' . $share
-                . ' ' . $home . '/shared/' . $share]);
+                . ' ' . $home . '/shared/' . $share,]);
             SSH::execute($stage, ['[ -e ' . $home . '/shared/' . $share . ' ] && cp -p ' . $home . '/shared/' . $share .
-                ' ' . $home . '/releases/' . $releaseName . '/' . $share]);
+                ' ' . $home . '/releases/' . $releaseName . '/' . $share,]);
         }
 
         // Define commands
