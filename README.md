@@ -22,7 +22,7 @@ and rollback functionality.
 Via Composer
 
 ``` bash
-$ composer require daltcore/laravel-deploy-helper v0.5.4
+$ composer require daltcore/laravel-deploy-helper ^0.5
 ```
 
 In your config/app.php
