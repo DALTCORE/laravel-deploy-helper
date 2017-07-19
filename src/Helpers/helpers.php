@@ -55,6 +55,6 @@ if (!function_exists('cli_header')) {
 \t\________|\_______/ \__|  \__|
 \t    Laravel Deploy Helper
 \tRamon Smit <rsmit@daltcore.com>
-\t\t    0.5.5\n";
+\t\t    0.5.6\n";
     }
 }
