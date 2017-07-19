@@ -22,6 +22,10 @@
     "laravelcollective/remote": "~5.1.",
     "composer/semver": "~1.4."
   },
+  "require-dev": {
+    "sebastiaanluca/laravel-helpers": "^1.0",
+    "phpunit/phpunit": " ^6.1"
+  },
   "autoload": {
     "files": [
       "src/Helpers/helpers.php"

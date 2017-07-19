@@ -9,17 +9,22 @@
 
 
 Compatible with Laravel 5.1 and higher. 
+Compatible with Laravel [5.1](https://github.com/DALTCORE/laravel-deploy-helper/tree/5.1), 5.4 and higher. 
+
+**For Laravel 5.1 use branch 5.1 and tag v0.5.x**
 
 LDH is a Laravel package that helps with deploying your website without the usage of FTP.  
 The LDH packages uses SSH to build a deployment environment on the server for zero-downtime deployments  
 and rollback functionality. 
+
+**Everyone is allowed to help getting this package bigger and better! ;-)**
 
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require daltcore/laravel-deploy-helper v0.5.3
+$ composer require daltcore/laravel-deploy-helper v0.5.4
 ```
 
 In your config/app.php
@@ -57,8 +62,9 @@ php artisan ldh:rollback --stage=production
 `stages`  
 In the stages section you have to define your stages information.
 
-`git.http`  
-For now I'm using git's http url with basic auth _http://user:pass@git.server/repo.git_
+`git`  
+You can use git's http url with basic auth. Example: _https://username:password@github.com/repo/name.git_ .  
+You can use git's ssh. Example: _git@github.com:repo/name.git_
 
 `connection`  
 In the connection section you can add your ssh details for deploying
@@ -92,9 +98,7 @@ Config example:
 return [
     'stages' => [
         'production' => [
-            'git' => [
-                'http' => ''
-            ],
+            'git' => '',
 
             'connection' => [
                 'host'     => '',

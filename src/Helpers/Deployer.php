@@ -24,12 +24,13 @@ class Deployer
     }
 
     /**
-     * @param \Collective\Remote\Connection $connection
-     * @param                               $stage
-     * @param                               $branch
-     * @param                               $ldh
+     * @param $stage
+     * @param $branch
+     * @param $ldh
      *
-     * @return int
+     * @throws \Exception
+     *
+     * @return array
      */
     public static function doDeploy($stage, $branch, $ldh)
     {
@@ -55,23 +56,33 @@ class Deployer
 
         // Check versions
         // Operators: http://php.net/manual/en/function.version-compare.php
-        verbose('['.$stage.'] Checking dependencies. Migth take a minute.');
+        verbose('['.$stage.'] Checking dependencies. Might take a minute.');
         foreach ($versions as $app => $version) {
+            //            if (SSH::checkAppVersion($connection, $app, $version) == '-1') {
+//                Locker::unlock($connection, $stage);
+//                throw new \Exception('Version of ' . $app . ' does not match your requirements');
+//            }
             SSH::checkAppVersion($connection, $app, $version);
         }
 
         // Define the deploy
         verbose('['.$stage.'] Creating new release directory and pulling from remote');
+        // Fixes https://github.com/DALTCORE/laravel-deploy-helper/issues/6#issuecomment-315124310
+        $url = config('laravel-deploy-helper.stages.'.$stage.'.git.http');
+        if ($url === null) {
+            $url = config('laravel-deploy-helper.stages.'.$stage.'.git');
+        }
+
         SSH::execute($stage, [
             'mkdir '.$home.'/releases/'.$releaseName,
             'cd '.$home.'/releases/'.$releaseName,
-            'git clone -b '.$branch.' '.config('laravel-deploy-helper.stages.'.$stage.'.git.http').' .',
+            'git clone -b '.$branch.' '."'".$url."'".' .',
         ]);
 
         // Pre-flight for shared stuff
         $items['directories'] = [];
         foreach ($shared['directories'] as $share) {
-            verbose('['.$stage.'] About to share direcroty "'.$home.'/current/'.$share.'"');
+            verbose('['.$stage.'] About to share directory "'.$home.'/current/'.$share.'"');
             $items['directories'][] = '[ -e '.$home.'/current/'.$share.' ] && cp -R -p '.$home.'/current/'
                 .$share.' '.$home.'/shared/'.$share;
             $items['directories'][] = '[ -e '.$home.'/shared/'.$share.' ] && cp -R -p '.$home.'/shared/'.
