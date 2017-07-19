@@ -7,8 +7,6 @@
 [![license](https://img.shields.io/github/license/DALTCORE/laravel-deploy-helper.svg?style=flat-square)](https://github.com/DALTCORE/laravel-deploy-helper/blob/master/LICENSE)
 [![Made by DALTCORE](https://img.shields.io/badge/MADE%20BY-DALTCORE-green.svg?style=flat-square)](https://github.com/DALTCORE)
 
-
-Compatible with Laravel 5.1 and higher. 
 Compatible with Laravel [5.1](https://github.com/DALTCORE/laravel-deploy-helper/tree/5.1), 5.4 and higher. 
 
 **For Laravel 5.1 use branch 5.1 and tag v0.5.x**
