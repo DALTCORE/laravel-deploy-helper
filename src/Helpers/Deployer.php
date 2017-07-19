@@ -114,7 +114,7 @@ class Deployer
         // Define post deploy actions
         verbose('[' . $stage . '] Linking new release to /current directory and removing temp');
         SSH::execute($stage, [
-            'ln -sfn ' . $home . '/releases/' . $releaseName . ' ' . $home . '/current',
+            'ln -sfn ' . $home . '/releases/' . $releaseName . ' ' . $home . '/current &&' .
             'rm -rf ' . $home . '/shared/*',
         ]);
 
