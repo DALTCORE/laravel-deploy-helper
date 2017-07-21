@@ -108,6 +108,7 @@ class Deployer
         verbose('[' . $stage . '] Executing custom commands');
         $items = [];
         foreach ($commands as $command) {
+            verbose('Running command: ' . $command);
             SSH::execute($stage, ['cd ' . $home . '/releases/' . $releaseName . ' && ' . $command]);
         }
 
