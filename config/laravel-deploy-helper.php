@@ -1,9 +1,15 @@
 <?php
 
 return [
+    'default' => [
+        'production',
+    ],
+    
     'stages' => [
         'production' => [
             'git' => '',
+            
+            'branch' => '',
 
             'connection' => [
                 'host'     => '',
