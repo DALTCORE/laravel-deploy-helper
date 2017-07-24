@@ -2,7 +2,7 @@
 
 return [
     'default' => [
-        'production',
+        'stage' => 'production',
     ],
     
     'stages' => [
