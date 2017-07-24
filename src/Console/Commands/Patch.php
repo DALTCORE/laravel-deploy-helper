@@ -43,6 +43,7 @@ class Patch extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
+     *
      * @return mixed
      */
     public function handle()

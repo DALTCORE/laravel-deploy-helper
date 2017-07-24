@@ -4,11 +4,11 @@ return [
     'default' => [
         'stage' => 'production',
     ],
-    
+
     'stages' => [
         'production' => [
             'git' => '',
-            
+
             'branch' => '',
 
             'connection' => [

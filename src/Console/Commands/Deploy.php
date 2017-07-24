@@ -43,6 +43,7 @@ class Deploy extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
+     *
      * @return mixed
      */
     public function handle()
@@ -56,7 +57,7 @@ class Deploy extends Command
         $this->ldh = Deployer::doDeploy($this->stage, $this->branch, $this->ldh);
 
         // Write to config
-        SSH::instance()->into($this->stage)->putString(SSH::home($this->stage) . '/ldh.json', json_encode($this->ldh));
+        SSH::instance()->into($this->stage)->putString(SSH::home($this->stage).'/ldh.json', json_encode($this->ldh));
 
         // Done
         SSH::performLanding($this->stage);
