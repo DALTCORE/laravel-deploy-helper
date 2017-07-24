@@ -2,9 +2,9 @@
 
 namespace DALTCORE\LaravelDeployHelper\Console\Commands;
 
+use DALTCORE\LaravelDeployHelper\Console\Command;
 use DALTCORE\LaravelDeployHelper\Helpers\Deployer;
 use DALTCORE\LaravelDeployHelper\Helpers\SSH;
-use Illuminate\Console\Command;
 
 class Deploy extends Command
 {
@@ -43,23 +43,22 @@ class Deploy extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
-     *
      * @return mixed
      */
     public function handle()
     {
+        $this->boot();
+
         // Do some pre-deploy checks
-        $this->ldh = SSH::preFlight($this, $this->option('stage'), $this->option('branch'));
+        $this->ldh = SSH::preFlight($this, $this->stage, $this->branch);
 
         // Do deploy
-        $this->ldh = Deployer::doDeploy($this->option('stage'), $this->option('branch'), $this->ldh);
+        $this->ldh = Deployer::doDeploy($this->stage, $this->branch, $this->ldh);
 
         // Write to config
-        SSH::instance()
-            ->into($this->option('stage'))
-            ->putString(SSH::home($this->option('stage')).'/ldh.json', json_encode($this->ldh));
+        SSH::instance()->into($this->stage)->putString(SSH::home($this->stage) . '/ldh.json', json_encode($this->ldh));
 
         // Done
-        SSH::performLanding($this->option('stage'));
+        SSH::performLanding($this->stage);
     }
 }

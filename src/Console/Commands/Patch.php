@@ -2,9 +2,9 @@
 
 namespace DALTCORE\LaravelDeployHelper\Console\Commands;
 
+use DALTCORE\LaravelDeployHelper\Console\Command;
 use DALTCORE\LaravelDeployHelper\Helpers\Deployer;
 use DALTCORE\LaravelDeployHelper\Helpers\SSH;
-use Illuminate\Console\Command;
 
 class Patch extends Command
 {
@@ -43,18 +43,19 @@ class Patch extends Command
      * Execute the console command.
      *
      * @throws \Exception on failure
-     *
      * @return mixed
      */
     public function handle()
     {
+        $this->boot();
+
         // Do some pre-deploy checks
-        SSH::preFlight($this, $this->option('stage'), $this->option('branch'));
+        SSH::preFlight($this, $this->stage, $this->branch);
 
         // Get the band-aid, we're going to patch some shit
-        Deployer::doPatch($this->option('stage'), $this->option('branch'));
+        Deployer::doPatch($this->stage, $this->branch);
 
         // Done
-        SSH::performLanding($this->option('stage'));
+        SSH::performLanding($this->stage);
     }
 }
