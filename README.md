@@ -95,9 +95,15 @@ Config example:
 <?php
 
 return [
+    'default' => [
+        'stage' => 'production',
+    ],
+
     'stages' => [
         'production' => [
             'git' => '',
+
+            'branch' => '',
 
             'connection' => [
                 'host'     => '',
@@ -124,8 +130,8 @@ return [
                     'storage',
                 ],
                 'files'       => [
-                    '.env'
-                ]
+                    '.env',
+                ],
             ],
 
             'config' => [
@@ -135,8 +141,8 @@ return [
                 ],
                 'keep'         => 4,
             ],
-        ]
-    ]
+        ],
+    ],
 ];
 
 ```
