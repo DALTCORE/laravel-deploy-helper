@@ -6,6 +6,7 @@
 [![Packagist](https://img.shields.io/packagist/dt/daltcore/laravel-deploy-helper.svg?style=flat-square)](https://packagist.org/packages/daltcore/laravel-deploy-helper)
 [![license](https://img.shields.io/github/license/DALTCORE/laravel-deploy-helper.svg?style=flat-square)](https://github.com/DALTCORE/laravel-deploy-helper/blob/master/LICENSE)
 [![Made by DALTCORE](https://img.shields.io/badge/MADE%20BY-DALTCORE-green.svg?style=flat-square)](https://github.com/DALTCORE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDALTCORE%2Flaravel-deploy-helper.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDALTCORE%2Flaravel-deploy-helper?ref=badge_shield)
 
 
 Compatible with Laravel [5.1](https://github.com/DALTCORE/laravel-deploy-helper/tree/5.1), 5.4 and higher. 
@@ -162,3 +163,7 @@ LDH deploys the following directory structure on first deploy
 
 As you can see, LDH makes a static link from `/current` to `/releases/1496845077`.  
 You you only have to point your vhost to the `/current/public` for your Laravel website to work.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDALTCORE%2Flaravel-deploy-helper.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDALTCORE%2Flaravel-deploy-helper?ref=badge_large)
