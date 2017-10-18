@@ -37,9 +37,9 @@ class Locker
      */
     public static function getLockPath(Connection $ssh, $stage)
     {
-        $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
+       //  $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
 
-        if (self::verify($ssh, $stage) !== true) {
+       /** if (self::verify($ssh, $stage) !== true) {
             error('Cannot open lockfile. Does not exist or does not have the rights.');
 
             return false;
@@ -49,7 +49,7 @@ class Locker
 
         $ssh->run(['ls '.$home.self::$lockfile], function ($callback) use (&$line) {
             $line = str_replace("\n", '', $callback);
-        });
+        }); */
 
         return $line;
     }
@@ -64,7 +64,7 @@ class Locker
      */
     public static function lock(Connection $ssh, $stage)
     {
-        $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
+        /** $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
 
         if (self::verify($ssh, $stage) === true) {
             error('Cannot lock deployment. Lockfile already in use!');
@@ -72,7 +72,7 @@ class Locker
             return false;
         }
 
-        $ssh->putString($home.self::$lockfile, time());
+        $ssh->putString($home.self::$lockfile, time()); **/
 
         return true;
     }
@@ -87,7 +87,7 @@ class Locker
      */
     public static function unlock(Connection $ssh, $stage)
     {
-        $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
+       /** $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
 
         if (self::verify($ssh, $stage) !== true) {
             error('Cannot delete lockfile. Does not exist or does not have the rights.');
@@ -96,6 +96,7 @@ class Locker
         }
 
         $ssh->delete($home.self::$lockfile);
+        */
 
         return true;
     }
