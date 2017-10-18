@@ -18,13 +18,14 @@ class Locker
      */
     public static function verify(Connection $ssh, $stage)
     {
-        $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
+//         $home = config('laravel-deploy-helper.stages.'.$stage.'.remote.root');
 
-        if ($ssh->exists($home.self::$lockfile)) {
-            return true;
-        }
+//         if ($ssh->exists($home.self::$lockfile)) {
+//             return true;
+//         }
 
-        return false;
+//         return false;
+        return true;
     }
 
     /**
