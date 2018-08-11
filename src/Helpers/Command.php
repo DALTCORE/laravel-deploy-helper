@@ -18,7 +18,9 @@ class Command
      */
     protected static function command($prefix, $args)
     {
-        $process = new Process(self::builder($prefix, $args));
+        $arguments = array_merge([$prefix], $args);
+
+        $process = new Process($arguments);
         $process->run();
 
         // executes after the command finishes
@@ -27,22 +29,5 @@ class Command
         }
 
         return $process->getOutput();
-    }
-
-    /**
-     * @param       $prefix
-     * @param array $args
-     *
-     * @return string
-     */
-    public static function builder($prefix, $args)
-    {
-        $builder = new ProcessBuilder();
-        $builder->setPrefix($prefix);
-
-        return $builder
-            ->setArguments($args)
-            ->getProcess()
-            ->getCommandLine();
     }
 }
