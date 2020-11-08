@@ -20,7 +20,7 @@
     "php": ">=5.6.0",
     "illuminate/support": "*",
     "laravelcollective/remote": "*",
-    "composer/semver": "^1.4"
+    "composer/semver": "*"
   },
   "require-dev": {
     "sebastiaanluca/laravel-helpers": "^1.0",
