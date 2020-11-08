@@ -30,4 +30,21 @@ class Command
 
         return $process->getOutput();
     }
+    
+    /**
+     * @param       $prefix
+     * @param array $args
+     *
+     * @return string
+     */
+    public static function builder($prefix, $args)
+    {
+        $builder = new ProcessBuilder();
+        $builder->setPrefix($prefix);
+
+        return $builder
+            ->setArguments($args)
+            ->getProcess()
+            ->getCommandLine();
+    }
 }
